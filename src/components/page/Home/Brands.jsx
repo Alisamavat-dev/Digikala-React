@@ -40,7 +40,13 @@ const Brands = () => {
   }
 
   return (
-    <div className="w-full py-4 relative px-4 md:px-6 lg:px-8 max-w-[1360px] mx-auto">
+    <div className="w-full py-4 relative px-4 md:px-6 lg:px-8 max-w-[1300px] mx-auto border-2 border-gray-200 rounded-2xl">
+      <div>
+        <h2 className=" font-bold flex justify-center text-xl">
+          <img src="../../../../public/svgexport-21.svg" alt="" />
+           محبوب‌ترین برنده ها
+        </h2>
+      </div>
       <Swiper
         modules={[Navigation]}
         slidesPerView="auto"
