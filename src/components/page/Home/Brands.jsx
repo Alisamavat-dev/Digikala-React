@@ -42,9 +42,9 @@ const Brands = () => {
   return (
     <div className="w-full py-4 relative px-4 md:px-6 lg:px-8 max-w-[1300px] mx-auto border-2 border-gray-200 rounded-2xl">
       <div>
-        <h2 className=" font-bold flex justify-center text-xl">
+        <h2 className="font-bold flex justify-center text-xl mb-5 ">
           <img src="../../../../public/svgexport-21.svg" alt="" />
-           محبوب‌ترین برنده ها
+          محبوب‌ترین برنده ها
         </h2>
       </div>
       <Swiper
@@ -84,8 +84,8 @@ const Brands = () => {
         }}
       >
         {brands?.map((brand) => (
-          <SwiperSlide className=" w-[60px] sm:w-[70px] md:w-[80px] lg:w-[90px] xl:w-[100px]">
-            <div className="flex flex-col items-center justify-center p-2">
+          <SwiperSlide className="w-[60px] sm:w-[70px] md:w-[80px] lg:w-[90px] xl:w-[100px] border-l border-gray-200 border-h-1 ">
+            <div className="flex flex-col items-center justify-center p-2 pl-4">
               <img
                 className="h-30 rounded-lg hover:scale-105 transition-transform duration-300 object-contain bg-white"
                 src={brand.img}
