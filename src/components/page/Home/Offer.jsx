@@ -8,6 +8,9 @@ const Offer = () => {
       const response = await fetch(
         "https://ali-samavat.github.io/API/after.json"
       );
+      if (!response.ok) {
+        throw new Error("خطا در دریافت اطلاعات آفر");
+      }
       return response.json();
     },
   });

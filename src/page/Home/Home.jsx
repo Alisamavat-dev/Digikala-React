@@ -6,7 +6,7 @@ import Brands from "../../components/page/Home/Brands";
 import { useQuery } from "@tanstack/react-query";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { useState } from "react";
-
+import Amazing_offer from "../../components/page/Home/Amazing_offer";
 const Home = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -39,6 +39,9 @@ const Home = () => {
     <div>
       <div className="container mx-auto">
         <CartList />
+      </div>
+      <div>
+        <Amazing_offer />
       </div>
       <div className="container mx-auto p-4">
         <Offer />

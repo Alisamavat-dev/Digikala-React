@@ -8,6 +8,9 @@ const Footer = () => {
       const response = await fetch(
         "https://ali-samavat.github.io/API/footer.json"
       );
+      if (!response.ok) {
+        throw new Error("خطا در دریافت اطلاعات فوتر");
+      }
       return response.json();
     },
   });

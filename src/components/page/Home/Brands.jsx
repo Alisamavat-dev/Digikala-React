@@ -52,10 +52,7 @@ const Brands = () => {
         slidesPerView="auto"
         spaceBetween={8}
         className="w-full"
-        navigation={{
-          nextEl: ".swiper-button-next",
-          prevEl: ".swiper-button-prev",
-        }}
+        navigation={true}
         breakpoints={{
           320: {
             slidesPerView: 3,

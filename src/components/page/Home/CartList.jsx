@@ -14,6 +14,9 @@ const CartList = () => {
       const response = await fetch(
         "https://ali-samavat.github.io/API/swiper.json"
       );
+      if (!response.ok) {
+        throw new Error("خطا در دریافت اطلاعات لیست سبد خرید");
+      }
       return response.json();
     },
   });
