@@ -1,17 +1,14 @@
-import CartList from "../../components/page/Home/CartList";
-import Footer from "../../components/page/Home/Footer";
-import Offer from "../../components/page/Home/Offer";
-import Slider from "../../components/page/Home/Slider";
-import Brands from "../../components/page/Home/Brands";
 import { useQuery } from "@tanstack/react-query";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { useState } from "react";
 
-const Home = () => {
+import Key from "../../components/page/Key/Key";
+
+const Key = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const { data, isPending, isError, error } = useQuery({
-    queryKey: ["Home"],
+    queryKey: ["Key"],
     queryFn: async () => {
       const response = await fetch(
         "https://ali-samavat.github.io/API/swiper.json"
@@ -37,23 +34,9 @@ const Home = () => {
   }
   return (
     <div>
-      <div className="container mx-auto">
-        <CartList />
-      </div>
-      <div className="container mx-auto p-4">
-        <Offer />
-      </div>
-      <div className=" flex justify-center items-center">
-        <Slider />
-      </div>
-      <div className="mb-20">
-        <Brands />
-      </div>
-      <div>
-        <Footer />
-      </div>
+      <Key/>
     </div>
   );
 };
 
-export default Home;
+export default Key;

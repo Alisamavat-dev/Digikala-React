@@ -31,7 +31,7 @@ const Offer = () => {
   return (
     <div className="container mx-auto px-2 sm:px-4 md:px-6 lg:px-8">
       <div className="flex justify-center">
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3 md:gap-4 max-w-[1230px] w-full">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3 md:gap-4 max-w-[1240px] w-full">
           {data?.map((item, index) => (
             <div
               key={index}

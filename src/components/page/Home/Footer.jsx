@@ -19,7 +19,7 @@ const Footer = () => {
         <div className="flex justify-around w-full bottom-0 bg-white h-16 border-[2px] border-gray-200 fixed z-[1000]">
           <Link to="/" className="flex flex-col items-center justify-center">
             <div className="flex flex-col items-center justify-center">
-              <div className="text-center">
+              <div className="text-center text-xs text-gray-400">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="w-6 h-6 fill-gray-400"
@@ -32,7 +32,7 @@ const Footer = () => {
                   />
                 </svg>
               </div>
-              <div className="text-center text-xs">
+              <div className="text-center text-xs text-gray-400">
                 <h2>خانه</h2>
               </div>
             </div>
@@ -43,7 +43,7 @@ const Footer = () => {
             className="flex flex-col items-center justify-center"
           >
             <div className="flex flex-col items-center justify-center">
-              <div className="text-center">
+              <div className="text-center text-xs text-gray-400">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="w-6 h-6 fill-gray-400"
@@ -56,7 +56,7 @@ const Footer = () => {
                   />
                 </svg>
               </div>
-              <div className="text-center text-xs">
+              <div className="text-center text-xs text-gray-400">
                 <h2>دسته بندی</h2>
               </div>
             </div>
@@ -67,7 +67,7 @@ const Footer = () => {
             className="flex flex-col items-center justify-center"
           >
             <div className="flex flex-col items-center justify-center">
-              <div className="text-center">
+              <div className="text-center text-xs text-gray-400">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="w-6 h-6 fill-gray-400"
@@ -80,7 +80,7 @@ const Footer = () => {
                   />
                 </svg>
               </div>
-              <div className="text-center text-xs">
+              <div className="text-center text-xs text-gray-400">
                 <h2>سبد خرید</h2>
               </div>
             </div>
@@ -91,7 +91,7 @@ const Footer = () => {
             className="flex flex-col items-center justify-center"
           >
             <div className="flex flex-col items-center justify-center">
-              <div className="text-center">
+              <div className="text-center text-xs text-gray-400">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="w-6 h-6 fill-gray-400"
@@ -104,7 +104,7 @@ const Footer = () => {
                   />
                 </svg>
               </div>
-              <div className="text-center text-xs">
+              <div className="text-center text-xs text-gray-400">
                 <h2>دیجیکالا</h2>
               </div>
             </div>

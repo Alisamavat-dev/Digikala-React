@@ -7,7 +7,7 @@ const Router = createBrowserRouter([
     path: "/",
     element: <Home />,
     errorElement: <ErrorBoundary />,
-  },
+  }
 ]);
 
 export default Router;
