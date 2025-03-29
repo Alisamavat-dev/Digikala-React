@@ -52,7 +52,6 @@ const Brands = () => {
         slidesPerView="auto"
         spaceBetween={8}
         className="w-full"
-        navigation={true}
         breakpoints={{
           320: {
             slidesPerView: 3,

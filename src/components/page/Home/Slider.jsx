@@ -42,6 +42,9 @@ const Slider = () => {
       <div className="max-w-[1260px] mx-auto">
         {/* Desktop Slider */}
         <div className="hidden md:block">
+          <h2 className="text-center p-6 text-[20px] font-sans">
+            خرید بر اساس دسته‌بندی
+          </h2>
           <Swiper
             slidesPerView="auto"
             spaceBetween={8}

@@ -3,10 +3,13 @@ import Footer from "../../components/page/Home/Footer";
 import Offer from "../../components/page/Home/Offer";
 import Slider from "../../components/page/Home/Slider";
 import Brands from "../../components/page/Home/Brands";
+import Amazing_offer from "../../components/page/Home/Amazing_offer";
+import Blog from "../../components/page/Home/Blog";
+
 import { useQuery } from "@tanstack/react-query";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { useState } from "react";
-import Amazing_offer from "../../components/page/Home/Amazing_offer";
+
 const Home = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -49,8 +52,11 @@ const Home = () => {
       <div className=" flex justify-center items-center">
         <Slider />
       </div>
-      <div className="mb-20">
+      <div className="">
         <Brands />
+      </div>
+      <div className="container mx-auto mb-20 md:mb-5">
+        <Blog />
       </div>
       <div>
         <Footer />
