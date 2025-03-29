@@ -5,7 +5,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import { useQuery } from "@tanstack/react-query";
 
-const TomanIcon = ({ className = "w-4 h-4" }) => (
+const TomanIcon = ({ className = "w-3 h-3" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     className={className}
@@ -20,7 +20,7 @@ const TomanIcon = ({ className = "w-4 h-4" }) => (
   </svg>
 );
 
-const Amazing_offer = () => {
+const AmazingOffer = () => {
   const {
     data: products,
     isLoading,
@@ -40,110 +40,92 @@ const Amazing_offer = () => {
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center w-full h-32">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
+      <div className="flex items-center justify-center w-full h-24">
+        <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-red-500"></div>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="flex items-center justify-center w-full h-32 text-red-500">
+      <div className="flex items-center justify-center w-full h-24 text-red-500 text-sm">
         {error.message}
       </div>
     );
   }
 
   return (
-    <div className="w-full py-2 sm:py-4 relative px-2 sm:px-4 md:px-6 lg:px-8 max-w-[1300px] mx-auto">
-      <div className="bg-gradient-to-r from-red-500 to-red-600 rounded-xl sm:rounded-2xl p-2 sm:p-4 shadow-lg">
-        <div className="flex items-center justify-between mb-2 sm:mb-4">
-          <div className="flex items-center gap-2">
-            <img
-              src="/svgexport-21.svg"
-              alt="تخفیف"
-              className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8"
-            />
-            <h2 className="text-white text-sm sm:text-base md:text-lg font-bold">
-              تخفیف‌های شگفت‌انگیز
-            </h2>
-          </div>
-          <span className="text-white text-xs sm:text-sm hover:text-red-100 transition-colors cursor-pointer">
-            مشاهده همه
-          </span>
-        </div>
+    <div className="w-full py-1 px-2 sm:px-3 max-w-[1300px] mx-auto ">
+      <div className="bg-gradient-to-r  bg-[#ef4a5a] rounded-xl shadow-md pt-4 pb-4 max-w-[1190px] mx-auto h-[260px]">
         <Swiper
           modules={[Navigation]}
           slidesPerView="auto"
-          spaceBetween={4}
+          spaceBetween={8}
           className="w-full"
-          navigation={{
-            nextEl: ".swiper-button-next",
-            prevEl: ".swiper-button-prev",
-          }}
           breakpoints={{
             320: {
               slidesPerView: 2,
-              spaceBetween: 8,
+              spaceBetween: 4,
             },
-            375: {
-              slidesPerView: 2,
-              spaceBetween: 8,
+            400: {
+              slidesPerView: 2.5,
+              spaceBetween: 4,
             },
-            480: {
-              slidesPerView: 2,
-              spaceBetween: 12,
+            500: {
+              slidesPerView: 4,
+              spaceBetween: 4,
             },
             640: {
-              slidesPerView: 3,
-              spaceBetween: 16,
+              slidesPerView: 4,
+              spaceBetween: 4,
             },
             768: {
-              slidesPerView: 3,
-              spaceBetween: 20,
+              slidesPerView: 5,
+              spaceBetween: 4,
             },
             1024: {
-              slidesPerView: 4,
-              spaceBetween: 24,
+              slidesPerView: 6,
+              spaceBetween: 4,
             },
             1280: {
-              slidesPerView: 5,
-              spaceBetween: 28,
+              slidesPerView: 7,
+              spaceBetween: 4,
             },
           }}
         >
           {products?.map((product, index) => (
-            <SwiperSlide key={index}>
-              <div className="bg-white p-1.5 sm:p-2 md:p-4 rounded-lg shadow-md h-full hover:shadow-xl transition-all duration-300 group">
-                <div className="relative overflow-hidden rounded-lg">
+            <SwiperSlide key={index} className="!w-auto">
+              <div className="bg-white p-1.5 shadow-sm hover:shadow-md transition-all duration-200 group max-w-[150px] h-[225px] flex flex-col">
+                <div className="relative overflow-hidden flex-1 flex items-center justify-center">
                   <img
-                    className="w-full h-24 sm:h-28 md:h-32 lg:h-40 object-contain rounded-lg group-hover:scale-105 transition-transform duration-300"
+                    className="w-full h-20 sm:h-24 object-contain group-hover:scale-105 transition-transform duration-200"
                     src={product.imageUrl}
                     alt={product.title}
                     loading="lazy"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 </div>
-                <h2 className="text-xs sm:text-sm md:text-base lg:text-lg font-semibold text-gray-800 mt-1.5 sm:mt-2 md:mt-3 lg:mt-4 line-clamp-2 group-hover:text-red-600 transition-colors duration-300 text-right">
-                  {product.title}
-                </h2>
-                <div className=" items-center mt-1.5 sm:mt-2 md:mt-3">
-                  <div className="flex items-center gap-2 ">
-                    <span className="flex justify-start bg-red-600 text-white text-[10px] sm:text-xs md:text-sm rounded-full px-1.5 sm:px-2  shadow-md whitespace-nowrap">
-                      {product.discount}%
-                    </span>
-                    <div className="flex flex-col gap-0.5 sm:gap-1 md:gap-1.5">
-                      <div className="flex items-center gap-1">
-                        <span className="text-xs sm:text-sm md:text-base lg:text-lg font-bold text-red-500">
-                          {product.price.toLocaleString()}
-                        </span>
-                        <TomanIcon className="w-3 h-3 sm:w-4 sm:h-4 text-red-500" />
-                      </div>
-                      <div className="flex items-center gap-1">
-                        <span className="text-[10px] sm:text-xs md:text-sm lg:text-base text-gray-400 line-through">
-                          {product.realPrice.toLocaleString()}
-                        </span>
-                        <TomanIcon className="w-3 h-3 sm:w-4 sm:h-4 text-gray-400" />
+                <div className="flex flex-col justify-center flex-1">
+                  <h2 className="text-[11px] font-medium text-gray-800 mt-1 line-clamp-2 group-hover:text-red-600 transition-colors duration-200 text-right leading-4">
+                    {product.title}
+                  </h2>
+                  <div className="mt-1">
+                    <div className="flex items-center gap-1">
+                      <span className="bg-red-600 text-white text-[10px] rounded-full px-1.5 py-0.5 shadow-sm whitespace-nowrap">
+                        {product.discount}%
+                      </span>
+                      <div className="flex flex-col gap-0.5">
+                        <div className="flex items-center gap-0.5">
+                          <span className="text-xs font-bold text-red-500">
+                            {product.price.toLocaleString()}
+                          </span>
+                          <TomanIcon className="w-2.5 h-2.5 text-red-500" />
+                        </div>
+                        <div className="flex items-center gap-0.5">
+                          <span className="text-[9px] text-gray-400 line-through">
+                            {product.realPrice.toLocaleString()}
+                          </span>
+                          <TomanIcon className="w-2.5 h-2.5 text-gray-400" />
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -157,4 +139,4 @@ const Amazing_offer = () => {
   );
 };
 
-export default Amazing_offer;
+export default AmazingOffer;
