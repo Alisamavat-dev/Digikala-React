@@ -55,8 +55,8 @@ const AmazingOffer = () => {
   }
 
   return (
-    <div className="w-full py-1 px-1 sm:px-3 max-w-[1300px] mx-auto">
-      <div className="bg-gradient-to-r bg-[#ef4a5a] rounded-xl shadow-md pt-2 sm:pt-4 pb-2 sm:pb-4 max-w-[1190px] mx-auto h-[220px] sm:h-[260px]">
+    <div className="w-full py-1 px-1 sm:px-3 mx-auto">
+      <div className="bg-gradient-to-r bg-[#ef4a5a] rounded-xl shadow-md pt-2 sm:pt-4 pb-2 sm:pb-4 max-w-[1230px] mx-auto h-[220px] sm:h-[260px]">
         <Swiper
           modules={[Navigation]}
           slidesPerView="auto"
@@ -93,6 +93,24 @@ const AmazingOffer = () => {
             },
           }}
         >
+          <SwiperSlide className="!w-[120px] sm:!w-[150px]">
+            <div className=" p-1 sm:p-1.5 shadow-md h-[200px] sm:h-[225px] flex items-center justify-center rounded-lg">
+              <div className="flex flex-col items-center">
+                <img
+                  src="../../../../public/شگفت انگیز.svg"
+                  alt="شگفت انگیز"
+                  className="h-[100px] w-[100px]"
+                />
+                <img
+                  src="../../../../public/شگفت انگیز-1.svg"
+                  alt="شگفت انگیز 1"
+                />
+                <h2 className="text-white text-[14px] sm:text-[16px] font-bold">
+                  مشاهده همه
+                </h2>
+              </div>
+            </div>
+          </SwiperSlide>
           {products?.map((product, index) => (
             <SwiperSlide key={index} className="!w-auto">
               <div className="bg-white p-1 sm:p-1.5 shadow-sm hover:shadow-md transition-all duration-200 group max-w-[140px] sm:max-w-[170px] h-[200px] sm:h-[225px] flex flex-col">
