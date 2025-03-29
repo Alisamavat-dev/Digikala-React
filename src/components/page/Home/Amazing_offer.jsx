@@ -55,24 +55,24 @@ const AmazingOffer = () => {
   }
 
   return (
-    <div className="w-full py-1 px-2 sm:px-3 max-w-[1300px] mx-auto ">
-      <div className="bg-gradient-to-r  bg-[#ef4a5a] rounded-xl shadow-md pt-4 pb-4 max-w-[1190px] mx-auto h-[260px]">
+    <div className="w-full py-1 px-1 sm:px-3 max-w-[1300px] mx-auto">
+      <div className="bg-gradient-to-r bg-[#ef4a5a] rounded-xl shadow-md pt-2 sm:pt-4 pb-2 sm:pb-4 max-w-[1190px] mx-auto h-[220px] sm:h-[260px]">
         <Swiper
           modules={[Navigation]}
           slidesPerView="auto"
-          spaceBetween={8}
+          spaceBetween={4}
           className="w-full"
           breakpoints={{
             320: {
               slidesPerView: 2,
               spaceBetween: 4,
             },
-            400: {
-              slidesPerView: 2.5,
+            375: {
+              slidesPerView: 2,
               spaceBetween: 4,
             },
-            500: {
-              slidesPerView: 4,
+            480: {
+              slidesPerView: 3,
               spaceBetween: 4,
             },
             640: {
@@ -95,36 +95,35 @@ const AmazingOffer = () => {
         >
           {products?.map((product, index) => (
             <SwiperSlide key={index} className="!w-auto">
-              <div className="bg-white p-1.5 shadow-sm hover:shadow-md transition-all duration-200 group max-w-[150px] h-[225px] flex flex-col">
+              <div className="bg-white p-1 sm:p-1.5 shadow-sm hover:shadow-md transition-all duration-200 group max-w-[140px] sm:max-w-[170px] h-[200px] sm:h-[225px] flex flex-col">
                 <div className="relative overflow-hidden flex-1 flex items-center justify-center">
                   <img
-                    className="w-full h-20 sm:h-24 object-contain group-hover:scale-105 transition-transform duration-200"
+                    className="w-[120px] sm:w-[150px] h-[90px] sm:h-[110px] object-contain"
                     src={product.imageUrl}
                     alt={product.title}
                     loading="lazy"
                   />
                 </div>
                 <div className="flex flex-col justify-center flex-1">
-                  <h2 className="text-[11px] font-medium text-gray-800 mt-1 line-clamp-2 group-hover:text-red-600 transition-colors duration-200 text-right leading-4">
+                  <h2 className="text-[10px] sm:text-[11px] font-sans text-gray-800 mt-1 line-clamp-2 group-hover:text-red-600 transition-colors duration-200">
                     {product.title}
                   </h2>
                   <div className="mt-1">
                     <div className="flex items-center gap-1">
-                      <span className="bg-red-600 text-white text-[10px] rounded-full px-1.5 py-0.5 shadow-sm whitespace-nowrap">
+                      <span className="bg-red-600 text-white text-[9px] sm:text-[10px] rounded-full px-1 sm:px-1.5 py-0.5 shadow-sm">
                         {product.discount}%
                       </span>
                       <div className="flex flex-col gap-0.5">
                         <div className="flex items-center gap-0.5">
-                          <span className="text-xs font-bold text-red-500">
+                          <TomanIcon className="w-2 sm:w-2.5 h-2 sm:h-2.5" />
+                          <span className="text-[10px] sm:text-xs font-semibold">
                             {product.price.toLocaleString()}
                           </span>
-                          <TomanIcon className="w-2.5 h-2.5 text-red-500" />
                         </div>
                         <div className="flex items-center gap-0.5">
-                          <span className="text-[9px] text-gray-400 line-through">
+                          <span className="text-[8px] sm:text-[9px] text-gray-400 line-through">
                             {product.realPrice.toLocaleString()}
                           </span>
-                          <TomanIcon className="w-2.5 h-2.5 text-gray-400" />
                         </div>
                       </div>
                     </div>

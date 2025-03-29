@@ -43,7 +43,7 @@ const Offer = () => {
               <div className="relative w-full h-full">
                 <img
                   src={item.img}
-                  className="w-full h-full object-cover rounded-xl transform group-hover:scale-105 transition-transform duration-300"
+                  className="w-full h-full object-cover rounded-xl"
                 />
               </div>
             </div>
