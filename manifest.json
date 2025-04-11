@@ -1,26 +1,73 @@
 {
-  "short_name": "Digikala",
-  "name": "Digikala App",
-  "start_url": "/",
+  "name": "دیجی‌کالا",
+  "short_name": "دیجی‌کالا",
+  "description": "فروشگاه اینترنتی دیجی‌کالا، بررسی، انتخاب و خرید آنلاین",
+  "start_url": ".",
   "display": "standalone",
-  "theme_color": "#000000",
   "background_color": "#ffffff",
+  "theme_color": "#ef4056",
   "orientation": "portrait",
   "icons": [
     {
-      "src": "logo.png",
-      "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/png"
+      "src": "./src/assets/logo.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
-      "src": "logo192.png",
+      "src": "./src/assets/logo.png",
+      "sizes": "96x96",
       "type": "image/png",
-      "sizes": "192x192"
+      "purpose": "any maskable"
     },
     {
-      "src": "logo512.png",
+      "src": "./src/assets/logo.png",
+      "sizes": "128x128",
       "type": "image/png",
-      "sizes": "512x512"
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./src/assets/logo.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./src/assets/logo.png",
+      "sizes": "152x152",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./src/assets/logo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./src/assets/logo.png",
+      "sizes": "384x384",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./src/assets/logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
     }
-  ]
+  ],
+  "shortcuts": [
+    {
+      "name": "صفحه اصلی",
+      "short_name": "خانه",
+      "description": "بازگشت به صفحه اصلی",
+      "url": "./",
+      "icons": [{ "src": "./src/assets/logo.png", "sizes": "96x96" }]
+    }
+  ],
+  "categories": ["shopping", "ecommerce", "marketplace"],
+  "lang": "fa",
+  "dir": "rtl",
+  "prefer_related_applications": false
 }

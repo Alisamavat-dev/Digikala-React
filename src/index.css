@@ -1,4 +1,38 @@
 @import "tailwindcss";
-* {
-  padding: 1;
+@media (min-width: 1039px) {
+  .swiper-button-next,
+  .swiper-button-prev {
+    width: 40px !important;
+    height: 40px !important;
+    position: absolute;
+    top: 75% !important;
+    background-color: rgba(229, 229, 237, 0.8);
+    z-index: 100;
+    border-radius: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .swiper-button-next:hover,
+  .swiper-button-prev:hover {
+    background-color: rgba(229, 229, 237, 1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .swiper-button-next {
+    right: 8% !important;
+    background-image: url("./assets/image/img1.png");
+  }
+
+  .swiper-button-prev {
+    right: 3% !important;
+    background-image: url("./assets/image/img2.png");
+  }
+}
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  display: none;
 }

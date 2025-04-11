@@ -5,9 +5,7 @@ const ErrorBoundary = () => {
   return (
     <div className="flex justify-center items-center h-screen bg-[#f0f0f0] text-[#333]">
       <h1>Oops! Something went wrong.</h1>
-      <p>
-        {error.message}
-      </p>
+      <p>{error ? error.message : "An unexpected error occurred."}</p>
     </div>
   );
 };
