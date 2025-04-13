@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { FaSpinner } from "react-icons/fa";
@@ -14,6 +14,22 @@ const ManageCreate = () => {
     price: "",
     realPrice: "",
   });
+
+  useEffect(() => {
+    if (formData.realPrice && formData.discount) {
+      const realPriceNum = Number(formData.realPrice.replace(/,/g, ""));
+      const discountNum = Number(formData.discount);
+      if (!isNaN(realPriceNum) && !isNaN(discountNum)) {
+        const discountedPrice = Math.round(
+          realPriceNum * (1 - discountNum / 100)
+        );
+        setFormData((prev) => ({
+          ...prev,
+          price: discountedPrice.toLocaleString(),
+        }));
+      }
+    }
+  }, [formData.realPrice, formData.discount]);
 
   const { mutate, isPending } = useMutation({
     mutationKey: ["product-create"],
@@ -48,10 +64,22 @@ const ManageCreate = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    if (name === "realPrice") {
+      // Remove non-numeric characters and format with commas
+      const numericValue = value.replace(/[^\d]/g, "");
+      const formattedValue = numericValue
+        ? parseInt(numericValue).toLocaleString()
+        : "";
+      setFormData((prev) => ({
+        ...prev,
+        [name]: formattedValue,
+      }));
+    } else {
+      setFormData((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    }
   };
 
   return (
@@ -104,6 +132,26 @@ const ManageCreate = () => {
 
         <div className="space-y-2">
           <label
+            htmlFor="realPrice"
+            className="block text-sm font-medium text-gray-700"
+          >
+            قیمت اصلی
+          </label>
+          <input
+            type="text"
+            id="realPrice"
+            name="realPrice"
+            value={formData.realPrice}
+            onChange={handleChange}
+            required
+            placeholder="مثال: 1,000,000"
+            dir="ltr"
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+          />
+        </div>
+
+        <div className="space-y-2">
+          <label
             htmlFor="discount"
             className="block text-sm font-medium text-gray-700"
           >
@@ -126,34 +174,16 @@ const ManageCreate = () => {
             htmlFor="price"
             className="block text-sm font-medium text-gray-700"
           >
-            قیمت با تخفیف
+            قیمت با تخفیف (محاسبه خودکار)
           </label>
           <input
             type="text"
             id="price"
             name="price"
             value={formData.price}
-            onChange={handleChange}
-            required
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-          />
-        </div>
-
-        <div className="space-y-2">
-          <label
-            htmlFor="realPrice"
-            className="block text-sm font-medium text-gray-700"
-          >
-            قیمت اصلی
-          </label>
-          <input
-            type="text"
-            id="realPrice"
-            name="realPrice"
-            value={formData.realPrice}
-            onChange={handleChange}
-            required
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            readOnly
+            dir="ltr"
+            className="w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg text-gray-500"
           />
         </div>
 

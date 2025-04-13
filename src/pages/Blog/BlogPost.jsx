@@ -47,7 +47,7 @@ const BlogPost = () => {
   return (
     <div>
       <Header />
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div className=" mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="mb-8">
           <Link
             to="/blog"
@@ -58,12 +58,12 @@ const BlogPost = () => {
           </Link>
         </div>
 
-        <article className="bg-white overflow-hidden">
+        <article className="bg-white overflow-hidden mx-auto">
           <div className="relative h-96">
             <img
               src={blogPost.image || "https://via.placeholder.com/800x400"}
               alt={blogPost.title}
-              className="w-full h-full object-cover"
+              className="max-w-5xl w-full h-full object-cover mx-auto"
               onError={(e) => {
                 e.target.src = "https://via.placeholder.com/800x400";
               }}
@@ -71,11 +71,11 @@ const BlogPost = () => {
           </div>
 
           <div className="p-8 md:p-12">
-            <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-6">
+            <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-6 text-center">
               {blogPost.title}
             </h1>
 
-            <div className="flex items-center text-gray-500 mb-8">
+            <div className="flex items-center text-gray-500 mb-8 justify-center">
               <div className="flex items-center ml-6">
                 <FaCalendarAlt className="ml-2" />
                 <span>{blogPost.date || "تاریخ نامشخص"}</span>
@@ -87,7 +87,7 @@ const BlogPost = () => {
             </div>
 
             <div
-              className="prose prose-lg max-w-none mx-auto"
+              className="max-w-5xl mx-auto text-justify"
               dangerouslySetInnerHTML={{ __html: blogPost.content }}
             />
           </div>
