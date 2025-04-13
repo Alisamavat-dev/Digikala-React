@@ -4,11 +4,8 @@ import {
   FaChevronDown,
   FaChevronUp,
   FaNewspaper,
-  FaVideo,
   FaImage,
-  FaUser,
   FaShoppingCart,
-  FaComments,
 } from "react-icons/fa";
 
 const AdminMenu = () => {
@@ -27,29 +24,9 @@ const AdminMenu = () => {
       path: "/manage/stories",
     },
     {
-      title: "ویدیوها",
-      icon: <FaVideo className="text-lg" />,
-      path: "/manage/videos",
-    },
-    {
-      title: "اخبار",
-      icon: <FaNewspaper className="text-lg" />,
-      path: "/manage/news",
-    },
-    {
       title: "وبلاگ‌ها",
       icon: <FaNewspaper className="text-lg" />,
       path: "/manage/blog",
-    },
-    {
-      title: "کاربران",
-      icon: <FaUser className="text-lg" />,
-      path: "/manage/users",
-    },
-    {
-      title: "نظرات",
-      icon: <FaComments className="text-lg" />,
-      path: "/manage/comments",
     },
   ];
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
@@ -23,6 +23,18 @@ const Blog = () => {
     },
   });
 
+  // Shuffle posts randomly and take only 3 posts
+  const randomizedPosts = useMemo(() => {
+    if (!readings) return [];
+    const shuffled = [...readings];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    // Take only first 3 posts for display
+    return shuffled.slice(0, 3);
+  }, [readings]);
+
   if (isPending) {
     return (
       <div className="min-h-[400px] flex justify-center items-center">
@@ -44,8 +56,8 @@ const Blog = () => {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {readings.map((post) => (
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {randomizedPosts.map((post) => (
           <Link
             to={`/blog/${post.id}`}
             key={post.id}
