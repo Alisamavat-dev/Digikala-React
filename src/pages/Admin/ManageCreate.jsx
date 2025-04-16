@@ -65,7 +65,7 @@ const ManageCreate = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     if (name === "realPrice") {
-      // Remove non-numeric characters and format with commas
+
       const numericValue = value.replace(/[^\d]/g, "");
       const formattedValue = numericValue
         ? parseInt(numericValue).toLocaleString()

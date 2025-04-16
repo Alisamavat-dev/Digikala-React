@@ -15,11 +15,16 @@ import ProductDetails from "../../pages/Product/ProductDetails";
 import ManageBlogList from "../../pages/Admin/ManageBlogList";
 import ManageCreateBlog from "../../pages/Admin/ManageCreateBlog";
 import ManageUpdateBlog from "../../pages/Admin/ManageUpdateBlog";
-
+import ShoppingPage from "../../pages/Shopping/Shopping";
 const Router = createBrowserRouter([
   {
     path: "/",
     element: <Home />,
+    errorElement: <ErrorBoundary />,
+  },
+  {
+    path: "/shopping",
+    element: <ShoppingPage />,
     errorElement: <ErrorBoundary />,
   },
   {

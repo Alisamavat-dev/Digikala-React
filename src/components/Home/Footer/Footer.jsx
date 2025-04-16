@@ -38,7 +38,7 @@ const Footer = () => {
   }
   return (
     <>
-      {/* Mobile Footer */}
+
       <footer className="md:hidden">
         <div className="flex justify-around w-full bottom-0 bg-white h-16 border-[2px] border-gray-200 z-[1000]">
           <Link to="/" className="flex flex-col items-center justify-center">
@@ -136,7 +136,7 @@ const Footer = () => {
         </div>
       </footer>
 
-      {/* Desktop Footer */}
+
       <footer className="bg-gray-100 hidden md:block">
         <div className="max-w-[1500px] mx-auto">
           <div className="flex justify-start">

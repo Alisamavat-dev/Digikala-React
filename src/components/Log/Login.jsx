@@ -86,7 +86,7 @@ const LoginForm = () => {
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-red-50 via-white to-red-50 p-4">
       <div className="w-full max-w-md">
         <div className="bg-white/90 backdrop-blur-md shadow-2xl rounded-3xl p-8 space-y-8">
-          {/* Logo Section */}
+
           <div className="text-center space-y-2">
             <img
               src="https://www.digikala.com/brand/full-vertical.svg"
@@ -99,9 +99,9 @@ const LoginForm = () => {
             </p>
           </div>
 
-          {/* Form Section */}
+
           <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Username Input */}
+
             <div className="space-y-2">
               <label
                 htmlFor="username"

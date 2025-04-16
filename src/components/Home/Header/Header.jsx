@@ -248,7 +248,7 @@ const Header = ({ sdata }) => {
                         </span>
                       </button>
                     </Link>
-                    <Link to="/cart">
+                    <Link to="/shopping">
                       <button className="border border-gray-300 px-3 py-1.5 text-xs rounded flex items-center gap-1 hover:bg-gray-50 transition-colors hover:border-red-500 hover:text-red-500">
                         <TfiShoppingCart className="w-3.5 h-3.5" />
                         <span>سبد خرید</span>
@@ -493,7 +493,7 @@ const Header = ({ sdata }) => {
                       <span>ورود / ثبت نام</span>
                     </Link>
                     <Link
-                      to="/cart"
+                      to="/shopping"
                       className="flex items-center gap-2 p-2 hover:bg-gray-50 rounded"
                     >
                       <TfiShoppingCart className="w-5 h-5" />

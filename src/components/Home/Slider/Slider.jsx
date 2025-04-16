@@ -46,7 +46,7 @@ const Slider = () => {
   return (
     <div className="w-full overflow-hidden px-2 sm:px-4 md:px-6 lg:px-8">
       <div className="max-w-[1260px] mx-auto">
-        {/* Desktop Slider */}
+
         <div className="hidden md:block">
           <h2 className="text-center p-6 text-[20px] font-sans">
             خرید بر اساس دسته‌بندی
@@ -100,7 +100,7 @@ const Slider = () => {
           </Swiper>
         </div>
 
-        {/* Mobile Slider */}
+
         <div className="md:hidden">
           <Swiper
             slidesPerView="auto"

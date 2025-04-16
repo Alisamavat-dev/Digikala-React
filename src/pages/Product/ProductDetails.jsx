@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { useParams } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
+import { useParams, useNavigate } from "react-router-dom";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import TomanIcon from "../../components/Home/Common/TomanIcon";
 import { FaRegHeart, FaHeart, FaShare, FaStar } from "react-icons/fa";
 import { TfiShoppingCart } from "react-icons/tfi";
@@ -9,12 +9,15 @@ import Footer from "../../components/Home/Footer/Footer";
 
 const ProductDetails = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const [isFavorite, setIsFavorite] = useState(false);
   const [quantity, setQuantity] = useState(1);
 
   const {
     data: product,
-    isLoading,
+    isPending,
+    isError,
     error,
   } = useQuery({
     queryKey: ["product", id],
@@ -29,7 +32,56 @@ const ProductDetails = () => {
     },
   });
 
-  if (isLoading) {
+  const { mutate: addToCart, isPending: isAddingToCart } = useMutation({
+    mutationFn: async () => {
+      const cartItem = {
+        productId: product.id,
+        title: product.title,
+        price: Number(product.realPrice),
+        discountedPrice: Number(product.price),
+        image: product.imageUrl,
+        quantity: Number(quantity),
+      };
+
+      const response = await fetch(
+        "https://67f518d0913986b16fa337be.mockapi.io/Shopping",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(cartItem),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("خطا در افزودن به سبد خرید");
+      }
+
+      return response.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["shopping-cart"] });
+    },
+  });
+
+  const handleAddToCartAndNavigate = async () => {
+    try {
+      await addToCart(undefined, {
+        onSuccess: () => {
+          navigate("/cart");
+        },
+      });
+    } catch (error) {
+      console.error("خطا در افزودن به سبد خرید:", error);
+    }
+  };
+
+  const handleAddToCart = () => {
+    addToCart();
+  };
+
+  if (isPending) {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-500"></div>
@@ -37,7 +89,7 @@ const ProductDetails = () => {
     );
   }
 
-  if (error) {
+  if (isError) {
     return (
       <div className="flex items-center justify-center min-h-screen text-red-500">
         {error.message}
@@ -171,11 +223,25 @@ const ProductDetails = () => {
               </div>
 
               <div className="flex flex-col gap-3">
-                <button className="w-full bg-red-600 text-white py-3 rounded-lg hover:bg-red-700 transition-colors duration-200 flex items-center justify-center gap-2">
-                  <TfiShoppingCart className="w-5 h-5" />
-                  <span>افزودن به سبد خرید</span>
+                <button
+                  onClick={handleAddToCart}
+                  disabled={isAddingToCart}
+                  className="w-full bg-red-600 text-white py-3 rounded-lg hover:bg-red-700 transition-colors duration-200 flex items-center justify-center gap-2 disabled:opacity-50"
+                >
+                  {isAddingToCart ? (
+                    <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                  ) : (
+                    <>
+                      <TfiShoppingCart className="w-5 h-5" />
+                      <span>افزودن به سبد خرید</span>
+                    </>
+                  )}
                 </button>
-                <button className="w-full border-2 border-red-600 text-red-600 py-3 rounded-lg hover:bg-red-50 transition-colors duration-200">
+                <button
+                  onClick={handleAddToCartAndNavigate}
+                  disabled={isAddingToCart}
+                  className="w-full border-2 border-red-600 text-red-600 py-3 rounded-lg hover:bg-red-50 transition-colors duration-200 disabled:opacity-50"
+                >
                   خرید این محصول
                 </button>
               </div>

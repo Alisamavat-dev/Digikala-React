@@ -3,7 +3,7 @@ import "swiper/css";
 import { Navigation, Pagination, A11y, Autoplay } from "swiper/modules";
 import { useQuery } from "@tanstack/react-query";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
-import Videoj from "../Videoj/Videoj";
+import Videoj from "../Videojs/Videoj";
 import { useCallback, useState } from "react";
 
 const Story = ({ nav = false, pag = false, space = 10, videosetter }) => {

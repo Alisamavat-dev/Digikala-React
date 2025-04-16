@@ -23,7 +23,6 @@ const Blog = () => {
     },
   });
 
-  // Shuffle posts randomly and take only 3 posts
   const randomizedPosts = useMemo(() => {
     if (!readings) return [];
     const shuffled = [...readings];
@@ -31,7 +30,6 @@ const Blog = () => {
       const j = Math.floor(Math.random() * (i + 1));
       [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
     }
-    // Take only first 3 posts for display
     return shuffled.slice(0, 3);
   }, [readings]);
 
