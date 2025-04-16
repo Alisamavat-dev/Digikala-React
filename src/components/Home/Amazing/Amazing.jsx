@@ -23,7 +23,6 @@ const TomanIcon = ({ className = "w-3 h-3" }) => (
 );
 
 const AmazingOffer = () => {
-
   const {
     data: products,
     isPending,
@@ -105,7 +104,10 @@ const AmazingOffer = () => {
                   alt="شگفت انگیز"
                   className="h-[100px] w-[100px]"
                 />
-                <img src="https://uploadkon.ir/uploads/180e09_25شگفت-انگیز-1.svg" alt="شگفت انگیز 1" />
+                <img
+                  src="https://uploadkon.ir/uploads/180e09_25شگفت-انگیز-1.svg"
+                  alt="شگفت انگیز 1"
+                />
                 <h2 className="text-white text-[14px] sm:text-[16px] font-bold">
                   مشاهده همه
                 </h2>
