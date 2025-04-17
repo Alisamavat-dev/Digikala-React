@@ -38,8 +38,8 @@ const ProductDetails = () => {
       const cartItem = {
         productId: product.id,
         title: product.title,
-        price: Number(product.realPrice),
-        discountedPrice: Number(product.price),
+        price: Number(product.realPrice.toString().replace(/,/g, "")),
+        discountedPrice: Number(product.price.toString().replace(/,/g, "")),
         image: product.imageUrl,
         quantity: Number(quantity),
       };
