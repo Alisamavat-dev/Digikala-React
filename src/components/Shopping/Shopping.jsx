@@ -1,5 +1,4 @@
 import React from "react";
-import TomanIcon from "../../components/Home/Common/TomanIcon";
 import { Link } from "react-router-dom";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
