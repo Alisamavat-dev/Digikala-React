@@ -2,10 +2,6 @@
 
 This project is a frontend implementation of the Digikala online store using React and Vite.
 
-## Link
-
-https://digikala-react.vercel.app/
-
 ## Technologies and Tools
 
 - React 19
@@ -66,6 +62,10 @@ src/
 ├── assets/            # Static files and images
 └── main.jsx          # Application entry point
 ```
+
+## Link
+
+https://digikala-react.vercel.app/
 
 ## Developers
 
