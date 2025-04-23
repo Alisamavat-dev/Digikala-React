@@ -3,18 +3,18 @@ import Home from "../../pages/Home/Home";
 import ErrorBoundary from "../Error/ErrorBoundary";
 import Login from "../../pages/Log/Login";
 import ManageLayout from "../../pages/Admin/ManageLayout";
-import ManageList from "../../pages/Admin/ManageList";
-import ManageCreate from "../../pages/Admin/ManageCreate";
-import ManageUpdate from "../../pages/Admin/ManageUpdate";
-import ManageStories from "../../pages/Admin/ManageStories";
-import CreateStory from "../../pages/Admin/CreateStory";
-import UpdateStory from "../../pages/Admin/UpdateStory";
+import ManageList from "../../pages/Admin/Product/ManageList";
+import ManageCreate from "../../pages/Admin/Product/ManageCreate";
+import ManageUpdate from "../../pages/Admin/Blog/ManageUpdate";
+import ManageStories from "../../pages/Admin/Story/ManageStories";
+import CreateStory from "../../pages/Admin/Story/CreateStory";
+import UpdateStory from "../../pages/Admin/Story/UpdateStory";
 import Blog from "../../pages/Blog/Blog";
 import BlogPost from "../../pages/Blog/BlogPost";
 import ProductDetails from "../../pages/Product/ProductDetails";
-import ManageBlogList from "../../pages/Admin/ManageBlogList";
-import ManageCreateBlog from "../../pages/Admin/ManageCreateBlog";
-import ManageUpdateBlog from "../../pages/Admin/ManageUpdateBlog";
+import ManageBlogList from "../../pages/Admin/Blog/ManageBlogList";
+import ManageCreateBlog from "../../pages/Admin/Blog/ManageCreateBlog";
+import ManageUpdateBlog from "../../pages/Admin/Product/ManageUpdateBlog";
 import ShoppingPage from "../../pages/Shopping/Shopping";
 const Router = createBrowserRouter([
   {

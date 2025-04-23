@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { FaSpinner } from "react-icons/fa";
-import AdminMenu from "../../components/Admin/AdminMenu";
+import AdminMenu from "../../../components/Admin/AdminMenu";
 
 const ManageCreate = () => {
   const navigate = useNavigate();
@@ -65,7 +65,6 @@ const ManageCreate = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     if (name === "realPrice") {
-
       const numericValue = value.replace(/[^\d]/g, "");
       const formattedValue = numericValue
         ? parseInt(numericValue).toLocaleString()

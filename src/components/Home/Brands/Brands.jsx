@@ -8,7 +8,6 @@ import { useQuery } from "@tanstack/react-query";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 const Brands = () => {
-
   const {
     data: brands,
     isPending,
@@ -43,12 +42,11 @@ const Brands = () => {
     );
   }
 
-
   return (
     <div className="w-full py-4 relative px-4 md:px-6 lg:px-8 max-w-[1300px] mx-auto border-2 border-gray-200 rounded-2xl">
       <div>
         <h2 className="font-bold flex justify-center text-xl mb-5 ">
-          <img src="../../../../public/svgexport-21.svg" alt="" />
+          <img src="/svgexport-21.svg" alt="" />
           محبوب‌ترین برنده ها
         </h2>
       </div>

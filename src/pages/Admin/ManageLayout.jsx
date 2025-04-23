@@ -13,7 +13,6 @@ const ManageLayout = () => {
     <div className="min-h-screen bg-gray-50">
       <BackgroundSVG />
       <div className="relative">
-
         <header className="sticky top-0 z-50">
           <nav className="bg-white/80 backdrop-blur-md shadow-md">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -65,11 +64,9 @@ const ManageLayout = () => {
           </nav>
         </header>
 
-
         <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <Outlet />
         </main>
-
 
         <footer className="bg-white/80 backdrop-blur-md shadow-md mt-8">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">

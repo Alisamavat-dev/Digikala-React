@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useNavigate } from "react-router-dom";
-import AdminMenu from "../../components/Admin/AdminMenu";
+import React, { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import AdminMenu from "../../../components/Admin/AdminMenu";
 import {
   FaSpinner,
   FaHeading,
@@ -18,7 +18,8 @@ import {
   FaHighlighter,
 } from "react-icons/fa";
 
-const ManageCreateBlog = () => {
+const ManageUpdateBlog = () => {
+  const { id } = useParams();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const [formData, setFormData] = useState({
@@ -150,14 +151,43 @@ const ManageCreateBlog = () => {
     }
   };
 
+  const { data: blog, isPending: isBlogLoading } = useQuery({
+    queryKey: ["blog", id],
+    queryFn: async () => {
+      try {
+        let data = await fetch(
+          `https://67f518d0913986b16fa337be.mockapi.io/Blog/${id}`
+        );
+        let res = await data.json();
+        return res;
+      } catch (error) {
+        return error;
+      }
+    },
+  });
+
+  useEffect(() => {
+    if (blog) {
+      setFormData({
+        title: blog.title || "",
+        image: blog.image || "",
+        excerpt: blog.excerpt || "",
+        content: blog.content || "",
+        date: blog.date || "",
+        author: blog.author || "",
+        category: blog.category || "",
+      });
+    }
+  }, [blog]);
+
   const { mutate, isPending } = useMutation({
-    mutationKey: ["blog-create"],
+    mutationKey: ["blog-update"],
     mutationFn: async (data) => {
       try {
         let response = await fetch(
-          "https://67f518d0913986b16fa337be.mockapi.io/Blog",
+          `https://67f518d0913986b16fa337be.mockapi.io/Blog/${id}`,
           {
-            method: "POST",
+            method: "PUT",
             headers: {
               "Content-type": "application/json",
             },
@@ -193,11 +223,19 @@ const ManageCreateBlog = () => {
     setEditorState((prev) => ({ ...prev, previewMode: !prev.previewMode }));
   };
 
+  if (isBlogLoading) {
+    return (
+      <div className="min-h-[50vh] flex justify-center items-center">
+        <FaSpinner size={44} className="animate-spin text-blue-500" />
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-8">
       <div className="flex justify-between items-center">
         <div className="flex items-center gap-4">
-          <h1 className="text-2xl font-bold text-gray-800">ایجاد وبلاگ جدید</h1>
+          <h1 className="text-2xl font-bold text-gray-800">ویرایش وبلاگ</h1>
           <AdminMenu />
         </div>
       </div>
@@ -492,4 +530,4 @@ const ManageCreateBlog = () => {
   );
 };
 
-export default ManageCreateBlog;
+export default ManageUpdateBlog;

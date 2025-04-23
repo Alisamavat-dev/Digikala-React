@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { FaSpinner } from "react-icons/fa";
-import AdminMenu from "../../components/Admin/AdminMenu";
+import AdminMenu from "../../../components/Admin/AdminMenu";
 
 const CreateStory = () => {
   const navigate = useNavigate();

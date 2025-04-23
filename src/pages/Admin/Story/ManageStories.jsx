@@ -6,7 +6,7 @@ import {
   FaPlus,
   FaImage,
 } from "react-icons/fa";
-import AdminMenu from "../../components/Admin/AdminMenu";
+import AdminMenu from "../../../components/Admin/AdminMenu";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 

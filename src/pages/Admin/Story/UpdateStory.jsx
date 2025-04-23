@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useNavigate, useParams } from "react-router-dom";
 import { FaSpinner } from "react-icons/fa";
-import AdminMenu from "../../components/Admin/AdminMenu";
+import AdminMenu from "../../../components/Admin/AdminMenu";
 
 const UpdateStory = () => {
   const { id } = useParams();
