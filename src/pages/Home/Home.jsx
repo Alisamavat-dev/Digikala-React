@@ -37,7 +37,7 @@ const Home = () => {
         <Banner nav={true} />
       </div>
       <div>
-        <div className="container mx-auto flex justify-center">
+        <div className="container mx-auto flex justify-center py-5">
           <CartList />
         </div>
         <div>
