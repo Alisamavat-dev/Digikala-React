@@ -2,14 +2,18 @@ import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import React, { useState } from "react";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { FaInstagram, FaTwitter, FaLinkedin } from "react-icons/fa";
 import { SiAparat } from "react-icons/si";
+import { IoMdCheckmarkCircleOutline } from "react-icons/io";
+import { MdError } from "react-icons/md";
 
 const Footer = () => {
   const [email, setEmail] = useState("");
   const [isHovered, setIsHovered] = useState(false);
   const [isSubscribed, setIsSubscribed] = useState(false);
+  const [subscriptionError, setSubscriptionError] = useState("");
+  const [loadedImages, setLoadedImages] = useState({});
 
   const {
     data: readings,
@@ -29,13 +33,32 @@ const Footer = () => {
     },
   });
 
+  const validateEmail = (email) => {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(email);
+  };
+
   const handleSubscribe = (e) => {
     e.preventDefault();
-    if (email) {
-      setIsSubscribed(true);
-      setEmail("");
-      setTimeout(() => setIsSubscribed(false), 3000);
+    setSubscriptionError("");
+
+    if (!email) {
+      setSubscriptionError("لطفا ایمیل خود را وارد کنید");
+      return;
     }
+
+    if (!validateEmail(email)) {
+      setSubscriptionError("لطفا یک ایمیل معتبر وارد کنید");
+      return;
+    }
+
+    setIsSubscribed(true);
+    setEmail("");
+    setTimeout(() => setIsSubscribed(false), 3000);
+  };
+
+  const handleImageLoad = (imageId) => {
+    setLoadedImages((prev) => ({ ...prev, [imageId]: true }));
   };
 
   const mobileMenuItems = [
@@ -111,7 +134,7 @@ const Footer = () => {
 
   if (isPending) {
     return (
-      <div className="w-screen h-screen flex justify-center items-center">
+      <div className="w-full h-48 flex justify-center items-center">
         <motion.div
           animate={{ rotate: 360 }}
           transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
@@ -124,356 +147,398 @@ const Footer = () => {
 
   if (isError) {
     return (
-      <div className="w-screen h-screen flex justify-center items-center">
-        <motion.p
+      <div className="w-full h-48 flex justify-center items-center">
+        <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-red-500 text-lg bg-red-50 p-4 rounded-lg shadow-md"
+          className="bg-red-50 p-6 rounded-xl shadow-lg"
         >
-          Error: {error.message}
-        </motion.p>
+          <div className="flex items-center gap-3">
+            <MdError className="text-red-500 text-2xl" />
+            <p className="text-red-600 font-medium">
+              {error?.message || "خطا در بارگذاری اطلاعات"}
+            </p>
+          </div>
+          <button
+            onClick={() => window.location.reload()}
+            className="mt-4 px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors"
+          >
+            تلاش مجدد
+          </button>
+        </motion.div>
       </div>
     );
   }
 
   return (
     <>
-      <footer className="md:hidden fixed bottom-0 w-full">
-        <motion.div
-          initial={{ y: 100 }}
-          animate={{ y: 0 }}
-          className="flex justify-around w-full bg-white h-16 border-t-2 border-gray-100 shadow-lg z-[1000]"
-        >
-          {mobileMenuItems.map((item, index) => (
-            <Link
-              key={index}
-              to={item.to}
-              className="group flex flex-col items-center justify-center transition-all duration-300 hover:text-red-500"
-            >
-              <motion.div
-                whileHover={{ scale: 1.1 }}
-                className="flex flex-col items-center justify-center"
-              >
-                {item.icon}
-                <span className="text-xs mt-1 group-hover:text-red-500">
-                  {item.text}
-                </span>
-              </motion.div>
-            </Link>
-          ))}
-        </motion.div>
-      </footer>
-
-      <footer className="from-gray-50 to-white hidden md:block">
-        <div className="max-w-[1500px] mx-auto px-4">
+      <div className="pb-16 md:pb-0">
+        {/* Mobile Footer */}
+        <footer className="md:hidden fixed bottom-0 w-full bg-white">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="py-8"
+            initial={{ y: 100 }}
+            animate={{ y: 0 }}
+            className="flex justify-around w-full h-16 border-t-2 border-gray-100 shadow-lg"
           >
-            <img
-              src={readings?.[0]?.logo}
-              className="w-52 hover:opacity-90 transition-opacity"
-              alt="logo"
-            />
-          </motion.div>
-
-          <div className="flex items-center justify-between py-4 border-b border-gray-200">
-            <div className="flex items-center space-x-6">
-              <div className="flex items-center space-x-2">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-5 w-5 text-gray-500"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
+            {mobileMenuItems.map((item, index) => (
+              <Link
+                key={index}
+                to={item.to}
+                className="group flex flex-col items-center justify-center w-full transition-all duration-300 hover:text-red-500 active:scale-95"
+              >
+                <motion.div
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="flex flex-col items-center justify-center"
                 >
-                  <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
-                </svg>
-                <span className="text-gray-600 ml-2">
-                  {readings?.[0]?.phone}
+                  {item.icon}
+                  <span className="text-xs mt-1 group-hover:text-red-500">
+                    {item.text}
+                  </span>
+                </motion.div>
+              </Link>
+            ))}
+          </motion.div>
+        </footer>
+
+        {/* Desktop Footer */}
+        <footer className="from-gray-50 to-white hidden md:block">
+          <div className="max-w-[1500px] mx-auto px-4">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="py-8"
+            >
+              <div className="relative w-52">
+                {!loadedImages["logo"] && (
+                  <div className="absolute inset-0 bg-gray-100 animate-pulse rounded-lg" />
+                )}
+                <img
+                  src={readings?.[0]?.logo}
+                  className={`w-full hover:opacity-90 transition-opacity ${
+                    loadedImages["logo"] ? "opacity-100" : "opacity-0"
+                  }`}
+                  alt="logo"
+                  onLoad={() => handleImageLoad("logo")}
+                />
+              </div>
+            </motion.div>
+
+            <div className="flex items-center justify-between py-4 border-b border-gray-200">
+              <div className="flex items-center space-x-6">
+                <div className="flex items-center space-x-2">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-5 w-5 text-gray-500"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                  >
+                    <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
+                  </svg>
+                  <span className="text-gray-600 ml-2">
+                    {readings?.[0]?.phone}
+                  </span>
+                </div>
+                <div className="text-gray-400">|</div>
+                <span className="text-gray-600">
+                  ۷ روز هفته، ۲۴ ساعته پاسخگوی شما هستیم
                 </span>
               </div>
-              <div className="text-gray-400">|</div>
-              <span className="text-gray-600">
-                ۷ روز هفته، ۲۴ ساعته پاسخگوی شما هستیم
-              </span>
+              <div className="flex items-center space-x-4">
+                <Link
+                  to="/contact"
+                  className="text-gray-600 hover:text-red-500 transition-colors duration-300"
+                >
+                  تماس با پشتیبانی
+                </Link>
+              </div>
             </div>
-            <div className="flex items-center space-x-4">
-              <Link
-                to="/contact"
-                className="text-gray-600 hover:text-red-500 transition-colors duration-300"
-              >
-                تماس با پشتیبانی
-              </Link>
+
+            <div className="grid grid-cols-5 gap-8 py-12">
+              {[
+                {
+                  icon: "https://www.digikala.com/statics/img/svg/footer/express-delivery.svg",
+                  text: "امکان تحویل اکسپرس",
+                },
+                {
+                  icon: "https://www.digikala.com/statics/img/svg/footer/cash-on-delivery.svg",
+                  text: "امکان پرداخت در محل",
+                },
+                {
+                  icon: "https://www.digikala.com/statics/img/svg/footer/support.svg",
+                  text: "۷ روز هفته، ۲۴ ساعته",
+                },
+                {
+                  icon: "https://www.digikala.com/statics/img/svg/footer/days-return.svg",
+                  text: "هفت روز ضمانت بازگشت",
+                },
+                {
+                  icon: "https://www.digikala.com/statics/img/svg/footer/original-products.svg",
+                  text: "ضمانت اصل بودن کالا",
+                },
+              ].map((feature, index) => (
+                <motion.div
+                  key={index}
+                  whileHover={{ y: -5 }}
+                  className="flex flex-col items-center justify-center p-4 rounded-lg hover:bg-gray-50 transition-all duration-300"
+                >
+                  <motion.img
+                    whileHover={{ rotate: 360 }}
+                    transition={{ duration: 0.5 }}
+                    src={feature.icon}
+                    alt={feature.text}
+                    className="w-12 h-12 mb-3"
+                  />
+                  <p className="text-sm text-gray-600 text-center font-medium">
+                    {feature.text}
+                  </p>
+                </motion.div>
+              ))}
             </div>
-          </div>
 
-          <div className="grid grid-cols-5 gap-8 py-12">
-            {[
-              {
-                icon: "https://www.digikala.com/statics/img/svg/footer/express-delivery.svg",
-                text: "امکان تحویل اکسپرس",
-              },
-              {
-                icon: "https://www.digikala.com/statics/img/svg/footer/cash-on-delivery.svg",
-                text: "امکان پرداخت در محل",
-              },
-              {
-                icon: "https://www.digikala.com/statics/img/svg/footer/support.svg",
-                text: "۷ روز هفته، ۲۴ ساعته",
-              },
-              {
-                icon: "https://www.digikala.com/statics/img/svg/footer/days-return.svg",
-                text: "هفت روز ضمانت بازگشت",
-              },
-              {
-                icon: "https://www.digikala.com/statics/img/svg/footer/original-products.svg",
-                text: "ضمانت اصل بودن کالا",
-              },
-            ].map((feature, index) => (
-              <motion.div
-                key={index}
-                whileHover={{ y: -5 }}
-                className="flex flex-col items-center justify-center p-4 rounded-lg hover:bg-gray-50 transition-all duration-300"
-              >
-                <motion.img
-                  whileHover={{ rotate: 360 }}
-                  transition={{ duration: 0.5 }}
-                  src={feature.icon}
-                  alt={feature.text}
-                  className="w-12 h-12 mb-3"
-                />
-                <p className="text-sm text-gray-600 text-center font-medium">
-                  {feature.text}
-                </p>
-              </motion.div>
-            ))}
-          </div>
+            <div className="grid grid-cols-4 gap-8 py-8 border-t border-gray-200">
+              <div className="space-y-4">
+                <h5 className="font-bold text-gray-700">با دیجی‌کالا</h5>
+                <ul className="space-y-2">
+                  {[
+                    "اتاق خبر دیجی‌کالا",
+                    "فروش در دیجی‌کالا",
+                    "فرصت‌های شغلی",
+                    "گزارش تخلف",
+                    "تماس با ما",
+                    "درباره ما",
+                  ].map((item, index) => (
+                    <motion.li
+                      key={index}
+                      whileHover={{ x: 5 }}
+                      className="transition-colors duration-300"
+                    >
+                      <Link
+                        to={readings?.[0]?.link}
+                        className="text-gray-500 hover:text-red-500 text-sm"
+                      >
+                        {item}
+                      </Link>
+                    </motion.li>
+                  ))}
+                </ul>
+              </div>
 
-          <div className="grid grid-cols-4 gap-8 py-8 border-t border-gray-200">
-            <div className="space-y-4">
-              <h5 className="font-bold text-gray-700">با دیجی‌کالا</h5>
-              <ul className="space-y-2">
-                {[
-                  "اتاق خبر دیجی‌کالا",
-                  "فروش در دیجی‌کالا",
-                  "فرصت‌های شغلی",
-                  "گزارش تخلف",
-                  "تماس با ما",
-                  "درباره ما",
-                ].map((item, index) => (
-                  <motion.li
-                    key={index}
-                    whileHover={{ x: 5 }}
-                    className="transition-colors duration-300"
-                  >
+              <div>
+                <h5 className="font-bold text-gray-700">خدمات مشتریان</h5>
+                <ul className="space-y-2">
+                  <li>
                     <Link
                       to={readings?.[0]?.link}
                       className="text-gray-500 hover:text-red-500 text-sm"
                     >
-                      {item}
+                      پاسخ به پرسش های متداول
                     </Link>
-                  </motion.li>
-                ))}
-              </ul>
-            </div>
-
-            <div>
-              <h5 className="font-bold text-gray-700">خدمات مشتریان</h5>
-              <ul className="space-y-2">
-                <li>
-                  <Link
-                    to={readings?.[0]?.link}
-                    className="text-gray-500 hover:text-red-500 text-sm"
-                  >
-                    پاسخ به پرسش های متداول
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to={readings?.[0]?.link}
-                    className="text-gray-500 hover:text-red-500 text-sm"
-                  >
-                    رویه های بازگرداندن کالا
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to={readings?.[0]?.link}
-                    className="text-gray-500 hover:text-red-500 text-sm"
-                  >
-                    شرایط استفاده
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to={readings?.[0]?.link}
-                    className="text-gray-500 hover:text-red-500 text-sm"
-                  >
-                    حریم خصوصی
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to={readings?.[0]?.link}
-                    className="text-gray-500 hover:text-red-500 text-sm"
-                  >
-                    گزارش باگ
-                  </Link>
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h5 className="font-bold text-gray-700">
-                راهنمای خرید از دیجی‌کالا
-              </h5>
-              <ul className="space-y-2">
-                <li>
-                  <Link
-                    to={readings?.[0]?.link}
-                    className="text-gray-500 hover:text-red-500 text-sm"
-                  >
-                    نحوه ثبت سفارش
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to={readings?.[0]?.link}
-                    className="text-gray-500 hover:text-red-500 text-sm"
-                  >
-                    رویه ارسال سفارش
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to={readings?.[0]?.link}
-                    className="text-gray-500 hover:text-red-500 text-sm"
-                  >
-                    شیوه پرداخت
-                  </Link>
-                </li>
-              </ul>
-            </div>
-
-            <div className="space-y-4">
-              <h5 className="font-bold text-gray-700">همراه ما باشید!</h5>
-              <div className="flex space-x-4">
-                <motion.a
-                  href="#"
-                  whileHover={{ scale: 1.1 }}
-                  className="text-gray-400 hover:text-red-500 transition-colors duration-300"
-                >
-                  <FaInstagram size={24} />
-                </motion.a>
-                <motion.a
-                  href="#"
-                  whileHover={{ scale: 1.1 }}
-                  className="text-gray-400 hover:text-red-500 transition-colors duration-300"
-                >
-                  <FaTwitter size={24} />
-                </motion.a>
-                <motion.a
-                  href="#"
-                  whileHover={{ scale: 1.1 }}
-                  className="text-gray-400 hover:text-red-500 transition-colors duration-300"
-                >
-                  <FaLinkedin size={24} />
-                </motion.a>
-                <motion.a
-                  href="#"
-                  whileHover={{ scale: 1.1 }}
-                  className="text-gray-400 hover:text-red-500 transition-colors duration-300"
-                >
-                  <SiAparat size={24} />
-                </motion.a>
+                  </li>
+                  <li>
+                    <Link
+                      to={readings?.[0]?.link}
+                      className="text-gray-500 hover:text-red-500 text-sm"
+                    >
+                      رویه های بازگرداندن کالا
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to={readings?.[0]?.link}
+                      className="text-gray-500 hover:text-red-500 text-sm"
+                    >
+                      شرایط استفاده
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to={readings?.[0]?.link}
+                      className="text-gray-500 hover:text-red-500 text-sm"
+                    >
+                      حریم خصوصی
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to={readings?.[0]?.link}
+                      className="text-gray-500 hover:text-red-500 text-sm"
+                    >
+                      گزارش باگ
+                    </Link>
+                  </li>
+                </ul>
               </div>
 
-              <div className="mt-6">
-                <h6 className="text-gray-700 font-medium mb-3">
-                  با ثبت ایمیل، از جدیدترین تخفیف‌ها باخبر شوید
-                </h6>
-                <form onSubmit={handleSubscribe} className="flex">
-                  <input
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="ایمیل شما"
-                    className="flex-1 px-4 py-2 rounded-r-lg border border-gray-300 focus:outline-none focus:border-red-500 transition-colors duration-300"
-                    required
+              <div>
+                <h5 className="font-bold text-gray-700">
+                  راهنمای خرید از دیجی‌کالا
+                </h5>
+                <ul className="space-y-2">
+                  <li>
+                    <Link
+                      to={readings?.[0]?.link}
+                      className="text-gray-500 hover:text-red-500 text-sm"
+                    >
+                      نحوه ثبت سفارش
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to={readings?.[0]?.link}
+                      className="text-gray-500 hover:text-red-500 text-sm"
+                    >
+                      رویه ارسال سفارش
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to={readings?.[0]?.link}
+                      className="text-gray-500 hover:text-red-500 text-sm"
+                    >
+                      شیوه پرداخت
+                    </Link>
+                  </li>
+                </ul>
+              </div>
+
+              <div className="space-y-4">
+                <h5 className="font-bold text-gray-700">همراه ما باشید!</h5>
+                <div className="flex space-x-4">
+                  <motion.a
+                    href="#"
+                    whileHover={{ scale: 1.1 }}
+                    className="text-gray-400 hover:text-red-500 transition-colors duration-300"
+                  >
+                    <FaInstagram size={24} />
+                  </motion.a>
+                  <motion.a
+                    href="#"
+                    whileHover={{ scale: 1.1 }}
+                    className="text-gray-400 hover:text-red-500 transition-colors duration-300"
+                  >
+                    <FaTwitter size={24} />
+                  </motion.a>
+                  <motion.a
+                    href="#"
+                    whileHover={{ scale: 1.1 }}
+                    className="text-gray-400 hover:text-red-500 transition-colors duration-300"
+                  >
+                    <FaLinkedin size={24} />
+                  </motion.a>
+                  <motion.a
+                    href="#"
+                    whileHover={{ scale: 1.1 }}
+                    className="text-gray-400 hover:text-red-500 transition-colors duration-300"
+                  >
+                    <SiAparat size={24} />
+                  </motion.a>
+                </div>
+
+                <div className="mt-6 max-w-md">
+                  <h6 className="text-gray-700 font-medium mb-3">
+                    با ثبت ایمیل، از جدیدترین تخفیف‌ها باخبر شوید
+                  </h6>
+                  <form onSubmit={handleSubscribe} className="relative">
+                    <input
+                      type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      placeholder="ایمیل شما"
+                      className={`w-full px-4 py-3 rounded-lg border ${
+                        subscriptionError ? "border-red-500" : "border-gray-300"
+                      } focus:outline-none focus:border-red-500 transition-colors duration-300`}
+                    />
+                    <button
+                      type="submit"
+                      onMouseEnter={() => setIsHovered(true)}
+                      onMouseLeave={() => setIsHovered(false)}
+                      className={`absolute left-2 top-1/2 -translate-y-1/2 px-6 py-2 bg-red-500 text-white rounded-lg transition-all duration-300 ${
+                        isHovered ? "bg-red-600 shadow-lg scale-105" : ""
+                      }`}
+                    >
+                      ثبت
+                    </button>
+                  </form>
+
+                  <AnimatePresence>
+                    {subscriptionError && (
+                      <motion.p
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -10 }}
+                        className="text-red-500 text-sm mt-2 flex items-center gap-1"
+                      >
+                        <MdError className="text-lg" />
+                        {subscriptionError}
+                      </motion.p>
+                    )}
+
+                    {isSubscribed && (
+                      <motion.p
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -10 }}
+                        className="text-green-500 text-sm mt-2 flex items-center gap-1"
+                      >
+                        <IoMdCheckmarkCircleOutline className="text-lg" />
+                        ایمیل شما با موفقیت ثبت شد!
+                      </motion.p>
+                    )}
+                  </AnimatePresence>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-gray-800 rounded-xl p-6 my-8">
+              <div className="flex justify-between items-center">
+                <div className="flex items-center space-x-4">
+                  <img
+                    className="w-12 h-12"
+                    src="https://www.digikala.com/statics/img/png/footerlogo2.webp"
+                    alt="digikala"
                   />
-                  <button
-                    type="submit"
-                    onMouseEnter={() => setIsHovered(true)}
-                    onMouseLeave={() => setIsHovered(false)}
-                    className={`px-6 py-2 bg-red-500 text-white rounded-l-lg transition-all duration-300 ${
-                      isHovered ? "bg-red-600 shadow-lg" : ""
-                    }`}
-                  >
-                    ثبت
-                  </button>
-                </form>
-                {isSubscribed && (
-                  <motion.p
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="text-green-500 text-sm mt-2"
-                  >
-                    ایمیل شما با موفقیت ثبت شد!
-                  </motion.p>
-                )}
+                  <h2 className="text-white font-bold mr-4">
+                    دانلود اپلیکیشن دیجی‌کالا
+                  </h2>
+                </div>
+                <div className="flex space-x-4">
+                  {[
+                    {
+                      src: "https://www.digikala.com/statics/img/svg/appStores/coffe-bazzar.svg",
+                      alt: "Bazaar",
+                    },
+                    {
+                      src: "https://www.digikala.com/statics/img/svg/appStores/myket.svg",
+                      alt: "Myket",
+                    },
+                    {
+                      src: "https://www.digikala.com/statics/img/svg/appStores/sib-app.svg",
+                      alt: "Sib App",
+                    },
+                  ].map((store, index) => (
+                    <motion.img
+                      key={index}
+                      whileHover={{ scale: 1.05 }}
+                      src={store.src}
+                      alt={store.alt}
+                      className="h-10 cursor-pointer ml-4"
+                    />
+                  ))}
+                </div>
               </div>
             </div>
-          </div>
 
-          <div className="bg-gray-800 rounded-xl p-6 my-8">
-            <div className="flex justify-between items-center">
-              <div className="flex items-center space-x-4">
-                <img
-                  className="w-12 h-12"
-                  src="https://www.digikala.com/statics/img/png/footerlogo2.webp"
-                  alt="digikala"
-                />
-                <h2 className="text-white font-bold mr-4">
-                  دانلود اپلیکیشن دیجی‌کالا
-                </h2>
-              </div>
-              <div className="flex space-x-4">
-                {[
-                  {
-                    src: "https://www.digikala.com/statics/img/svg/appStores/coffe-bazzar.svg",
-                    alt: "Bazaar",
-                  },
-                  {
-                    src: "https://www.digikala.com/statics/img/svg/appStores/myket.svg",
-                    alt: "Myket",
-                  },
-                  {
-                    src: "https://www.digikala.com/statics/img/svg/appStores/sib-app.svg",
-                    alt: "Sib App",
-                  },
-                ].map((store, index) => (
-                  <motion.img
-                    key={index}
-                    whileHover={{ scale: 1.05 }}
-                    src={store.src}
-                    alt={store.alt}
-                    className="h-10 cursor-pointer ml-4"
-                  />
-                ))}
-              </div>
+            <div className="text-center py-6 border-t border-gray-200">
+              <p className="text-sm text-gray-500">
+                کلیه حقوق این سایت متعلق به شرکت نوآوران فن آوازه (دیجی‌کالا)
+                می‌باشد.
+              </p>
             </div>
           </div>
-
-          <div className="text-center py-6 border-t border-gray-200">
-            <p className="text-sm text-gray-500">
-              کلیه حقوق این سایت متعلق به شرکت نوآوران فن آوازه (دیجی‌کالا)
-              می‌باشد.
-            </p>
-          </div>
-        </div>
-      </footer>
+        </footer>
+      </div>
     </>
   );
 };
