@@ -1,12 +1,13 @@
 import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { Grid } from "swiper/modules";
 import { useQuery } from "@tanstack/react-query";
 import "swiper/css";
+import "swiper/css/grid";
 
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 const Slider = () => {
-
   const {
     data: sliderData,
     isPending,
@@ -25,6 +26,11 @@ const Slider = () => {
     },
   });
 
+  // تبدیل داده‌ها به آرایه یک بعدی برای نمایش در موبایل
+  const flattenedData = sliderData?.reduce((acc, item) => {
+    return [...acc, item[0], item[1]];
+  }, []);
+
   if (isPending) {
     return (
       <div className="w-screen h-screen flex justify-center items-center">
@@ -41,12 +47,9 @@ const Slider = () => {
     );
   }
 
-
-  
   return (
     <div className="w-full overflow-hidden px-2 sm:px-4 md:px-6 lg:px-8">
       <div className="max-w-[1260px] mx-auto">
-
         <div className="hidden md:block">
           <h2 className="text-center p-6 text-[20px] font-sans">
             خرید بر اساس دسته‌بندی
@@ -100,64 +103,51 @@ const Slider = () => {
           </Swiper>
         </div>
 
-
         <div className="md:hidden">
+          <h2 className="text-center p-4 text-[18px] font-sans">
+            خرید بر اساس دسته‌بندی
+          </h2>
           <Swiper
-            slidesPerView="auto"
+            modules={[Grid]}
+            slidesPerView={3}
+            grid={{
+              rows: 3,
+              fill: "row",
+            }}
             spaceBetween={8}
             className="w-full"
             breakpoints={{
-              320: {
-                slidesPerView: 3,
-                spaceBetween: 8,
+              480: {
+                slidesPerView: 4,
+                spaceBetween: 12,
                 grid: {
                   rows: 3,
                   fill: "row",
                 },
               },
-              480: {
-                slidesPerView: 4,
-                spaceBetween: 12,
-              },
               640: {
                 slidesPerView: 5,
                 spaceBetween: 16,
+                grid: {
+                  rows: 3,
+                  fill: "row",
+                },
               },
             }}
           >
-            {sliderData?.map((swiper, index) => (
+            {flattenedData?.map((item, index) => (
               <SwiperSlide
                 key={`mobile-${index}`}
                 className="w-[80px] sm:w-[90px] p-1"
               >
-                <div className="flex flex-col items-center justify-center mb-1.5 sm:mb-2">
-                  <img
-                    className="w-full p-1 mb-0.5 rounded-lg hover:scale-105 transition-transform duration-300 object-contain"
-                    src={swiper[0].image}
-                    alt={swiper[0].title}
-                  />
-                  <p className="h-[25px] sm:h-[28px] text-center overflow-hidden text-ellipsis text-[9px] sm:text-[10px] font-medium">
-                    {swiper[0].title}
-                  </p>
-                </div>
                 <div className="flex flex-col items-center justify-center">
                   <img
                     className="w-full p-1 mb-0.5 rounded-lg hover:scale-105 transition-transform duration-300 object-contain"
-                    src={swiper[1].image}
-                    alt={swiper[1].title}
+                    src={item.image}
+                    alt={item.title}
                   />
                   <p className="h-[25px] sm:h-[28px] text-center overflow-hidden text-ellipsis text-[9px] sm:text-[10px] font-medium">
-                    {swiper[1].title}
-                  </p>
-                </div>
-                <div className="flex flex-col items-center justify-center">
-                  <img
-                    className="w-full p-1 mb-0.5 rounded-lg hover:scale-105 transition-transform duration-300 object-contain"
-                    src={swiper[1].image}
-                    alt={swiper[1].title}
-                  />
-                  <p className="h-[25px] sm:h-[28px] text-center overflow-hidden text-ellipsis text-[9px] sm:text-[10px] font-medium">
-                    {swiper[1].title}
+                    {item.title}
                   </p>
                 </div>
               </SwiperSlide>

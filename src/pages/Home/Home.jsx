@@ -20,7 +20,7 @@ const Home = () => {
       <div className="fixed top-0 left-0 right-0 z-100">
         <Header />
       </div>
-      <div className="relative md:mt-30 mt-17">
+      <div className="relative md:mt-30 mt-28">
         <div
           className={`transition-opacity duration-300 ${
             showContent ? "opacity-100" : "opacity-0 hidden"
